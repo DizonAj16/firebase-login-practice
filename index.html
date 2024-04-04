@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Login Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="box">
+        <div class="form">
+            <h2>Login Form</h2>
+            <form>
+                <div class="inputbox">
+                    <input type="text" value="" id="username" required>
+                    <span>username</span>
+                </div>
+                <div class="inputbox">
+                    <input type="email" value="" id="email" required>
+                    <span>E-mail</span>
+                </div>
+                <div class="inputbox">
+                    <input type="text" value="" id="phone" required>
+                    <span>Phone Number</span>
+                </div>
+                <input type="submit" value="submit" class="submit" id="submit">
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAnnNA7KFz1066fTx2v-tCsIvwLZYC6AyY",
+            authDomain: "fir-vanilla-js-8a200.firebaseapp.com",
+            databaseURL: "https://fir-vanilla-js-8a200-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "fir-vanilla-js-8a200",
+            storageBucket: "fir-vanilla-js-8a200.appspot.com",
+            messagingSenderId: "668326571397",
+            appId: "1:668326571397:web:0d56579eccc4d1ea0fe8ec"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Get a reference to the database service
+        const db = getDatabase(app);
+
+        document.getElementById("submit").addEventListener('click', function (e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+
+            set(ref(db, 'user/' + username), {
+                username: username,
+                email: email,
+                PhoneNumber: phone
+            }).then(() => {
+                alert("Login Successful!");
+            }).catch((error) => {
+                console.error("Error adding document: ", error);
+                alert("Error: " + error.message);
+            });
+        });
+    </script>
+</body>
+
+</html>
